@@ -1,12 +1,38 @@
 import { useState } from "react"
+import { baseUrl } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import axios from "axios";
 const EditProfile = ({data}) => {
-    const [user,editUser]=useState(data)
+    let {firstName,lastName,age,photoUrl,gender,about,skills}=data;
+   // console.log("editProfile")
+    const dispatch=useDispatch()
+    const [user,editUser]=useState({firstName,lastName,age,photoUrl,gender,about,skills});
+   
+    const[error,setError]=useState(false)
     function handleEdit(event){
         let fieldName=event.currentTarget.name;
         let fieldValue=event.currentTarget.value;
+      //  console.log(event.target.name+" "+fieldName+" "+fieldValue+" "+event.target.value)
         editUser((prev)=>{
             return {...prev,[fieldName]:fieldValue}
         })
+    }
+    async function Edit(){
+
+        try{
+            let result=await axios.patch(baseUrl+"/profile/edit",user,{withCredentials:true})
+            
+            let {firstName,lastName,age,gender,photoUrl,skills,about}=result;
+            setError(false)
+            dispatch(addUser(result.data.user))
+        }
+        catch(err){
+            if(err.status==400){
+                setError(true)
+            }
+            
+        }
     }
   return (
  <>
@@ -15,7 +41,7 @@ const EditProfile = ({data}) => {
    
     <div className="avatar">
         <img
-      src={user.photoUrl}
+      src={data.photoUrl}
       className="w-sm  object-cover h-64  rounded-lg shadow-2xl"
     />
     </div>
@@ -23,22 +49,29 @@ const EditProfile = ({data}) => {
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
         <fieldset className="fieldset">
-          <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" name="emailId" value={user.emailId} onChange={handleEdit} />
+          
            <label className="label">FirstName</label>
           <input type="text" className="input" placeholder="FirstName" name="firstName" value={user.firstName} onChange={handleEdit} />
             <label className="label">LastName</label>
           <input type="text" className="input" placeholder="LastName" name="lastName" value={user.lastName} onChange={handleEdit} />
+           <label className="label">Update Profile Photo</label>
+          <input type="text" className="input" placeholder="Profile Pic" name="photoUrl" value={user.photoUrl} onChange={handleEdit} />
             <label className="label">Age</label>
           <input type="number" className="input " placeholder="Age" name="age" value={user.age} onChange={handleEdit} />
            <label className="label">Gender</label>
-          <input type="text" className="input " placeholder="Gender" name="gender" value={user.gender} onChange={handleEdit} />
+            <select value={user.gender} className="select appearance-none" name="gender" onChange={handleEdit}>
+            <option disabled={true}>{data.gender}</option>
+            <option  >men</option>
+           <option >women</option>
+            <option value="others" >others</option>
+            </select>
            <label className="label">About</label>
           <input type="text" className="input" placeholder="About" name="about" value={user.about} onChange={handleEdit}/>
         <label className="label">Skills</label>
-          <input type="text" className="input" placeholder="Skills" />
+          <input type="text" className="input" placeholder="Skills" name="skills" value={user.skills} onChange={handleEdit} />
+          {error&&<p>Incorrect handling of edit details</p>}
         
-          <button className="btn btn-neutral mt-4">Edit</button>
+          <button className="btn btn-neutral mt-4" onClick={Edit}>Edit</button>
         </fieldset>
       </div>
     </div>

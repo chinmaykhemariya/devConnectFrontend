@@ -16,7 +16,7 @@ const Body = () => {
   let fetchUser=async()=>{
     try{
       if(user){return;}
-      console.log("api")
+   //   console.log("api")
       let result=await axios.get(baseUrl+"/profile/view",{withCredentials:true});
       let newUser=result.data.user
       if(newUser){
@@ -39,9 +39,8 @@ const Body = () => {
     
     <>
     {user&&
-    <div className='flex flex-col min-h-screen'>
-      <NavBar />
-    
+    <div className='flex flex-col min-h-screen'>  
+    <NavBar />
         <div className='flex-1'>
             <Outlet/>
         </div>

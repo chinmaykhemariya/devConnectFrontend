@@ -4,8 +4,10 @@ import EditProfile from "./EditProfile"
 
 const Profile = () => {
     let user=useSelector((state)=>state.user.user)
-  return (
+  return (<>
+  
    <EditProfile data={user}/>
+   </>
   )
 }
 
