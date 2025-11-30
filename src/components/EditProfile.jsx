@@ -8,7 +8,7 @@ const EditProfile = ({data}) => {
    // console.log("editProfile")
     const dispatch=useDispatch()
     const [user,editUser]=useState({firstName,lastName,age,photoUrl,gender,about,skills});
-   
+    const[isEdited,setEdited]=useState(false)
     const[error,setError]=useState(false)
     function handleEdit(event){
         let fieldName=event.currentTarget.name;
@@ -26,6 +26,10 @@ const EditProfile = ({data}) => {
             let {firstName,lastName,age,gender,photoUrl,skills,about}=result;
             setError(false)
             dispatch(addUser(result.data.user))
+            setEdited(true);
+            setTimeout(()=>{
+                console.log("setTimeOut")
+                setEdited(false)},1000)
         }
         catch(err){
             if(err.status==400){
@@ -36,6 +40,7 @@ const EditProfile = ({data}) => {
     }
   return (
  <>
+
 <div className="hero bg-base-200 min-h-screen">
   <div className="hero-content flex-col sm:flex-row-reverse">
    
@@ -77,6 +82,13 @@ const EditProfile = ({data}) => {
     </div>
   </div>
 </div>
+
+  {isEdited&&<div className="toast toast-top toast-center">
+ 
+  <div className="alert alert-success">
+    <span>Profile edited successfully.</span>
+  </div>
+</div>}
  </>
   )
 }
