@@ -18,6 +18,7 @@ const Body = () => {
       if(user){return;}
    //   console.log("api")
       let result=await axios.get(baseUrl+"/profile/view",{withCredentials:true});
+      
       let newUser=result.data.user
       if(newUser){
         dispatch(addUser(newUser))
@@ -41,8 +42,8 @@ const Body = () => {
     {user&&
     <div className='flex flex-col min-h-screen'>  
     <NavBar />
-        <div className='flex-1'>
-            <Outlet/>
+        <div className='flex-1 '>
+            <Outlet />
         </div>
       <Footer />
     </div>}

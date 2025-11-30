@@ -6,8 +6,8 @@ const UserCard = ({user}) => {
   <div className="card  shadow w-96 bg-base-200 shadow-2xl">
   <div className="hover-3d w-full">
   {/* content */}
-  <figure className="max-w-96 w-full rounded-2xl h-64 ">
-    <img src={user?.photoUrl}className="object-cover max-h-64 w-full max-w-96 h-64" alt="3D card" />
+  <figure className="max-w-96 w-96 rounded-2xl h-64 ">
+    <img src={user?.photoUrl}className="object-cover max-h-64 w-96 max-w-96 h-64 object-center " alt="3D card" />
   </figure>
   {/* 8 empty divs needed for the 3D effect */}
   <div></div>
@@ -21,7 +21,9 @@ const UserCard = ({user}) => {
 </div>
   <div className="card-body ">
     <h2 className="card-title">{user?.firstName+" "+user?.lastName}</h2>
-    <p>{user?.about}</p><p>{user?.about}</p>
+    <p>{user?.gender+" "+user?.age}</p>
+    <p>{user?.about.length>40?user?.about.slice(0,30)+"...":user?.about}</p>
+      <p>{user?.skills.length>40?user?.skills.slice(0,30)+"...":user?.skills}</p>
     <div className="card-actions justify-end">
           <button className="btn btn-info btn-soft">Vibe</button>
       <button className="btn btn-warning btn-soft ">Pass</button>

@@ -5,6 +5,7 @@ import { baseUrl } from "../utils/constants"
 import { removeUser } from "../utils/userSlice"
 import appStore from "../utils/appStore"
 import { removeFeed } from "../utils/feedSlice"
+import { destroyConnections } from "../utils/connectionsSlice"
 
 const NavBar = () => {
   const dispatch=useDispatch()
@@ -14,6 +15,7 @@ const NavBar = () => {
     //  console.log(appStore.getState())
     dispatch(removeUser())
     dispatch(removeFeed())
+    dispatch(destroyConnections())
     // console.log(appStore.getState())
     await axios.post(baseUrl+"/user/logout",{},{withCredentials:true})
     
@@ -49,6 +51,8 @@ const NavBar = () => {
             <span className="badge">Edit</span>
           </Link>
         </li>
+        <li><Link to="/connections" >LinkZone</Link></li>
+        <li><Link to="/requests" >Knocks</Link></li>
         <li><a>Settings</a></li>
         <li><Link to="/login" onClick={logOut}>Logout</Link></li>
       </ul>

@@ -28,8 +28,8 @@ const EditProfile = ({data}) => {
             dispatch(addUser(result.data.user))
             setEdited(true);
             setTimeout(()=>{
-                console.log("setTimeOut")
-                setEdited(false)},1000)
+                
+                setEdited(false)},2000)
         }
         catch(err){
             if(err.status==400){
