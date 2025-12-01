@@ -6,6 +6,7 @@ import { removeUser } from "../utils/userSlice"
 import appStore from "../utils/appStore"
 import { removeFeed } from "../utils/feedSlice"
 import { destroyConnections } from "../utils/connectionsSlice"
+import { destroyRequests } from "../utils/requestSlice"
 
 const NavBar = () => {
   const dispatch=useDispatch()
@@ -16,6 +17,7 @@ const NavBar = () => {
     dispatch(removeUser())
     dispatch(removeFeed())
     dispatch(destroyConnections())
+    dispatch(destroyRequests())
     // console.log(appStore.getState())
     await axios.post(baseUrl+"/user/logout",{},{withCredentials:true})
     

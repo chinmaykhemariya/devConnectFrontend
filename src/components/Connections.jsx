@@ -10,7 +10,7 @@ const Connections = () => {
     const dispatch=useDispatch()
     
     async function getConnections(){
-        try{
+        try{if(userConnections){return}
             let connections=await axios.get(baseUrl+"/user/connections",{withCredentials:true})
             connections=connections.data.data
             dispatch(addConnections(connections))
@@ -26,10 +26,10 @@ const Connections = () => {
   return (
 <>{
    userConnections.length>0&&<div className="flex justify-center" >
-  <div className="carousel mt-auto max-w-sm rounded-box space-x-4">
+  <div className="carousel mt-5 max-w-sm rounded-box space-x-4">
     {userConnections.map((connection)=>{
         return(
-  <div className="carousel-item ">
+  <div key={connection.connectionId} className="carousel-item ">
     <div className="card bg-base-300 w-96 shadow-sm">
   <figure className="px-10 pt-10">
     <img
