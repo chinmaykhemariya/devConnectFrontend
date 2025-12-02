@@ -47,7 +47,7 @@ const EditProfile = ({data}) => {
     <div className="avatar">
         <img
       src={data.photoUrl}
-      className="w-sm  object-cover h-64  rounded-lg shadow-2xl"
+      className="w-sm  object-cover h-64 object-center rounded-lg shadow-2xl"
     />
     </div>
    

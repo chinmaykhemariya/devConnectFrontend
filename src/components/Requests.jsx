@@ -2,24 +2,30 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux"
 import { baseUrl } from "../utils/constants";
 import { addRequests } from "../utils/requestSlice";
-import { useEffect } from "react";
+import { useEffect ,useState} from "react";
 import { addConnections } from "../utils/connectionsSlice";
+import Loader from"./Loader"
+import Empty from "./Empty";
 const Requests = () => {
-
+const [isEmpty,setEmpty]=useState(false)
   const requests=useSelector((state)=>state.requests.requests);
   const dispatch=useDispatch();
   const getRequests=async()=>{try{
-    if(requests){return;}
+   
     let result=await axios.get(baseUrl+"/user/requests/recieved",{withCredentials:true});
+    
     result=result.data.data;
+    
+    
+     if(result.length==0){setEmpty(true)}
     dispatch(addRequests(result))}
     catch(err){
       console.log(err.message)
     }
   }
   useEffect(()=>{getRequests()},[]);
-  if(!requests){return }
-  if(requests.length==0){return <h1>no requests</h1>}
+  if(!requests){return (<Loader></Loader>) }
+ 
 
   return (<>{
    requests.length>0&&
@@ -44,6 +50,7 @@ const Requests = () => {
           await axios.patch(baseUrl+`/request/review/accepted/${request._id}`,{},{withCredentials:true})
            let result=await axios.get(baseUrl+"/user/requests/recieved",{withCredentials:true});
            result=result.data.data;
+            if(result.length==0){setEmpty(true)}
            dispatch(addRequests(result))
            let connections=await axios.get(baseUrl+"/user/connections",{withCredentials:true})
             connections=connections.data.data
@@ -56,6 +63,7 @@ const Requests = () => {
          await axios.patch(baseUrl+`/request/review/rejected/${request._id}`,{},{withCredentials:true})
           let result=await axios.get(baseUrl+"/user/requests/recieved",{withCredentials:true});
           result=result.data.data;
+           if(result.length==0){setEmpty(true)}
            dispatch(addRequests(result))}
            catch(err){console.log(err.message)}
       }}
@@ -70,6 +78,7 @@ const Requests = () => {
 </div>
 
   }
+     {isEmpty&&<Empty>No More Requests </Empty>}
     </>
   )
 }

@@ -3,16 +3,19 @@ import { baseUrl } from "../utils/constants"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addConnections } from "../utils/connectionsSlice"
+import Empty from "./Empty"
+import Loader from "./Loader"
 
 
 const Connections = () => {
     const userConnections=useSelector((state)=>state.connections.connections);
     const dispatch=useDispatch()
-    
+    const[isEmpty,setEmpty]=useState(false)
     async function getConnections(){
-        try{if(userConnections){return}
+        try{
             let connections=await axios.get(baseUrl+"/user/connections",{withCredentials:true})
             connections=connections.data.data
+            if(connections.length==0){setEmpty(true)}
             dispatch(addConnections(connections))
         }
         catch(err){
@@ -20,8 +23,8 @@ const Connections = () => {
         }
     }
     useEffect(()=>{getConnections()},[])
-     if(!userConnections){return}
-     if(userConnections.length==0){return<h1>no</h1>}
+     if(!userConnections){return (<Loader/>)}
+    
    
   return (
 <>{
@@ -38,8 +41,8 @@ const Connections = () => {
   </figure>
   <div className="card-body">
     <h2 className="card-title">{connection.connectedTo.firstName+" "+connection.connectedTo.lastName}</h2>
-    <p>{connection.connectedTo.about>40?connection.connectedTo.about.slice(0,40)+"...":connection.connectedTo.about}</p>
-     <p>{connection.connectedTo.skills>40?connection.connectedTo.about.slice(0,40)+"...":connection.connectedTo.skills}</p>
+    <p>{connection.connectedTo.about.length>40?connection.connectedTo.about.slice(0,40)+"...":connection.connectedTo.about}</p>
+     <p>{connection.connectedTo.skills.length>40?connection.connectedTo.about.slice(0,40)+"...":connection.connectedTo.skills}</p>
     <div className="card-actions justify-end">
       <button className="btn btn-success btn-soft">Shoot a Text</button>
     </div>
@@ -55,6 +58,7 @@ const Connections = () => {
 </div>
 
 }
+{isEmpty&&<Empty>You don't have any connections</Empty>}
 </>
   )
 }

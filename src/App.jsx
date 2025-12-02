@@ -7,6 +7,9 @@ import appStore from "./utils/appStore";
 import Profile from "./components/Profile";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
+import Home from "./components/Home";
+import SignUp from"./components/SignUP"
+import Test from "./components/Test";
 
 function App(){
     return(
@@ -14,13 +17,16 @@ function App(){
         <Provider store={appStore}>
         <BrowserRouter basename="/">
         <Routes> 
-            <Route path="/" element={<Body/>} >
+             <Route path="/" element={<Home/>}></Route>
+            <Route path="/spark" element={<Body/>} >
             <Route path="feed" element={<Feed/>}></Route>
              <Route path="profile" element={<Profile/>}></Route>
              <Route path="connections" element={<Connections/>}></Route>
             <Route path="requests" element={<Requests/>}></Route>
             </Route>
             <Route path="/login" element={<Login/>}></Route>
+            <Route path="/signup"  element={<SignUp/>}></Route>
+            <Route path="/test" element={<Test/>}/>
         </Routes>
         </BrowserRouter>
         </Provider>

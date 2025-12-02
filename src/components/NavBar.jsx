@@ -31,7 +31,7 @@ const NavBar = () => {
    <>
    {user&&<div className="navbar bg-base-content shadow-sm">
   <div className="flex-1">
-    <Link to="/feed" className="btn btn-ghost bg-base-content shadow text-error-content text-xl">devConnect</Link>
+    <Link to="/spark/feed" className="btn btn-ghost bg-base-content shadow text-error-content text-xl ">devConnect</Link>
   </div>
   <div className="flex gap-2">
     
@@ -48,15 +48,15 @@ const NavBar = () => {
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <Link to="/profile" className="justify-between">
+          <Link to="/spark/profile" className="justify-between">
             Profile
             <span className="badge">Edit</span>
           </Link>
         </li>
-        <li><Link to="/connections" >LinkZone</Link></li>
-        <li><Link to="/requests" >Knocks</Link></li>
+        <li><Link to="/spark/connections" >LinkZone</Link></li>
+        <li><Link to="/spark/requests" >Knocks</Link></li>
         <li><a>Settings</a></li>
-        <li><Link to="/login" onClick={logOut}>Logout</Link></li>
+        <li><Link to="/" onClick={logOut}>Logout</Link></li>
       </ul>
     </div>
   </div>

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 let initialState={
-    feed:[]
+    feed:null
 }
 export const feedSlice=createSlice({
 name:"feedSlice",
@@ -10,7 +10,7 @@ reducers:{
 state.feed=action.payload;
     },
     removeFeed:(state,action)=>{
-        state.feed=[];
+        state.feed=null;
     }
 }
 })

@@ -1,6 +1,19 @@
-
-
-const UserCard = ({user}) => {
+import { useDispatch } from "react-redux";
+import { baseUrl } from "../utils/constants"
+import axios from "axios";
+import { addFeed } from "../utils/feedSlice";
+const UserCard = ({user,setEmpty}) => {
+  const dispatch=useDispatch()
+  async function sendRequest(status,toUserId){try{
+    await axios.post(baseUrl+`/request/send/${status}/${toUserId}`,{},{withCredentials:true});
+     let newFeed=await axios.get(baseUrl+"/user/feed",{withCredentials:true});
+     if(newFeed.data.feed.length==0){setEmpty(true)}
+        dispatch(addFeed(newFeed.data.feed))
+  }
+    catch(err){
+      console.log(err.message)
+    }
+  }
   return (
     <div className='flex justify-center  mt-5'>
   <div className="card  shadow w-96 bg-base-200 shadow-2xl">
@@ -25,8 +38,8 @@ const UserCard = ({user}) => {
     <p>{user?.about.length>40?user?.about.slice(0,30)+"...":user?.about}</p>
       <p>{user?.skills.length>40?user?.skills.slice(0,30)+"...":user?.skills}</p>
     <div className="card-actions justify-end">
-          <button className="btn btn-info btn-soft">Vibe</button>
-      <button className="btn btn-warning btn-soft ">Pass</button>
+          <button className="btn btn-info btn-soft" onClick={()=>{sendRequest("interested",user._id)}}>Vibe</button>
+      <button className="btn btn-warning btn-soft"onClick={()=>{sendRequest("ignored",user._id)}}>Pass</button>
     </div>
   </div>
    

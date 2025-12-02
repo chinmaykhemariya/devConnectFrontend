@@ -1,10 +1,11 @@
 
 import { useState } from 'react'
 import axios from "axios"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { addUser } from '../utils/userSlice'
 import { baseUrl } from '../utils/constants'
+
 const Login = () => {
   const [isWrong,setWrong]=useState(false);
     const dispatch=useDispatch()
@@ -26,7 +27,7 @@ let result =await axios.post(baseUrl+"/user/login",{
 
     dispatch(addUser(result.data.user))
    // setWrong(false)
-  navigate("/feed")
+  navigate("/spark/feed")
 }
 catch(err){
   if(err.status==401){
@@ -56,8 +57,8 @@ catch(err){
           <input type="email" className="input" placeholder="Email" name="emailId" value={user.emailId} onChange={handleLoginDetails} />
           <label className="label">Password</label>
           <input type="password" className="input" placeholder="Password" name='password' value={user.password} onChange={handleLoginDetails} />
+           <div><Link className="link link-hover" to={"/signup"}>New here? Sign up now.</Link></div>
          {isWrong&&<p >Incorrect Credentials</p>}
-         
           <button className="btn btn-neutral mt-4" onClick={Login}>Login</button>
         </fieldset>
       </div>
