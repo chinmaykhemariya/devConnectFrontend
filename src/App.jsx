@@ -9,7 +9,7 @@ import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Home from "./components/Home";
 import SignUp from"./components/SignUP"
-import Test from "./components/Test";
+
 
 function App(){
     return(
@@ -26,7 +26,7 @@ function App(){
             </Route>
             <Route path="/login" element={<Login/>}></Route>
             <Route path="/signup"  element={<SignUp/>}></Route>
-            <Route path="/test" element={<Test/>}/>
+           
         </Routes>
         </BrowserRouter>
         </Provider>

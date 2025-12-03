@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import axios from "axios";
 const EditProfile = ({data}) => {
-    let {firstName,lastName,age,photoUrl,gender,about,skills}=data;
+  const[preview,setPreview]=useState(data.photoUrl)
+    let {firstName,lastName,age,gender,about,skills}=data;
    // console.log("editProfile")
     const dispatch=useDispatch()
-    const [user,editUser]=useState({firstName,lastName,age,photoUrl,gender,about,skills});
+    const [user,editUser]=useState({firstName,lastName,age,photoUrl:null,gender,about,skills});
     const[isEdited,setEdited]=useState(false)
     const[error,setError]=useState(false)
     function handleEdit(event){
@@ -21,9 +22,18 @@ const EditProfile = ({data}) => {
     async function Edit(){
 
         try{
-            let result=await axios.patch(baseUrl+"/profile/edit",user,{withCredentials:true})
-            
-            let {firstName,lastName,age,gender,photoUrl,skills,about}=result;
+          const formData=new FormData();
+          formData.append("firstName",user.firstName)
+          formData.append("lastName",user.lastName)
+          formData.append("age",user.age)
+          formData.append("gender",user.gender)
+          formData.append("skills",user.skills)
+          if(user.photoUrl){ formData.append("photoUrl",user.photoUrl)}
+         
+          formData.append("about",user.about)
+            let result=await axios.patch(baseUrl+"/profile/edit",formData,{withCredentials:true})
+            console.log(result)
+          /*  let {firstName,lastName,age,gender,photoUrl,skills,about}=result;*/
             setError(false)
             dispatch(addUser(result.data.user))
             setEdited(true);
@@ -31,7 +41,7 @@ const EditProfile = ({data}) => {
                 
                 setEdited(false)},2000)
         }
-        catch(err){
+        catch(err){console.log(err)
             if(err.status==400){
                 setError(true)
             }
@@ -46,7 +56,7 @@ const EditProfile = ({data}) => {
    
     <div className="avatar">
         <img
-      src={data.photoUrl}
+      src={preview}
       className="w-sm  object-cover h-64 object-center rounded-lg shadow-2xl"
     />
     </div>
@@ -60,12 +70,21 @@ const EditProfile = ({data}) => {
             <label className="label">LastName</label>
           <input type="text" className="input" placeholder="LastName" name="lastName" value={user.lastName} onChange={handleEdit} />
            <label className="label">Update Profile Photo</label>
-          <input type="text" className="input" placeholder="Profile Pic" name="photoUrl" value={user.photoUrl} onChange={handleEdit} />
+           <input type="file" className="file-input " name="photoUrl"  onChange={(event)=>{
+            console.log(event.currentTarget.files)
+              let photoUrl=event.currentTarget.files[0];
+              let view =URL.createObjectURL(photoUrl)
+              setPreview(view)
+              editUser((prev)=>{
+                return {...prev,photoUrl}
+              })
+           }} />
+          
             <label className="label">Age</label>
           <input type="number" className="input " placeholder="Age" name="age" value={user.age} onChange={handleEdit} />
            <label className="label">Gender</label>
             <select value={user.gender} className="select appearance-none" name="gender" onChange={handleEdit}>
-            <option disabled={true}>{data.gender}</option>
+            <option value={data.gender} disabled={true}>{data.gender}</option>
             <option  >men</option>
            <option >women</option>
             <option value="others" >others</option>

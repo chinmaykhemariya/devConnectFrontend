@@ -72,7 +72,7 @@ const SignUP = () => {
             </div>
             </div>
            
-        {error&&<p>Incorrect handling of edit details</p>}
+        {error&&<p>Incorrect handling of signUp details</p>}
           <button className="btn btn-neutral mt-4" onClick={signUpTheUser} >signUp</button>
         </fieldset>
       </div>
