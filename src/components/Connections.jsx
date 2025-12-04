@@ -10,12 +10,12 @@ import Loader from "./Loader"
 const Connections = () => {
     const userConnections=useSelector((state)=>state.connections.connections);
     const dispatch=useDispatch()
-    const[isEmpty,setEmpty]=useState(false)
+   // const[isEmpty,setEmpty]=useState(false)
     async function getConnections(){
         try{
             let connections=await axios.get(baseUrl+"/user/connections",{withCredentials:true})
             connections=connections.data.data
-            if(connections.length==0){setEmpty(true)}
+          //  if(connections.length==0){setEmpty(true)}
             dispatch(addConnections(connections))
         }
         catch(err){
@@ -28,7 +28,7 @@ const Connections = () => {
    
   return (
 <>{
-   userConnections.length>0&&<div className="flex justify-center" >
+   userConnections.length>0?<div className="flex justify-center" >
   <div className="carousel mt-5 max-w-sm rounded-box space-x-4">
     {userConnections.map((connection)=>{
         return(
@@ -55,10 +55,10 @@ const Connections = () => {
 
 
 </div>
-</div>
+</div>:<Empty>You don't have any connections</Empty>
 
 }
-{isEmpty&&<Empty>You don't have any connections</Empty>}
+
 </>
   )
 }

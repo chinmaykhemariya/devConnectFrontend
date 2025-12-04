@@ -31,10 +31,9 @@ const SignUP = () => {
 <div className="hero bg-base-200 min-h-screen">
   <div className="hero-content flex-col md:flex-row-reverse">
     <div className="text-center lg:text-left">
-      <h1 className="text-5xl font-bold">Login now!</h1>
+      <h1 className="text-5xl font-bold"> Sign up!</h1>
       <p className="py-6 ">
-        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-        quasi. In deleniti eaque aut repudiandae et a id nisi.
+       Sign up to explore a world of like-minded individuals. From shared hobbies to professional interests, our platform brings people together to collaborate, learn, and grow. Your next meaningful connection is just one step away.
       </p>
     </div>
    

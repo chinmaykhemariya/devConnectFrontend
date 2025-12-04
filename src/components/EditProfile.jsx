@@ -32,7 +32,7 @@ const EditProfile = ({data}) => {
          
           formData.append("about",user.about)
             let result=await axios.patch(baseUrl+"/profile/edit",formData,{withCredentials:true})
-            console.log(result)
+            
           /*  let {firstName,lastName,age,gender,photoUrl,skills,about}=result;*/
             setError(false)
             dispatch(addUser(result.data.user))
@@ -71,7 +71,7 @@ const EditProfile = ({data}) => {
           <input type="text" className="input" placeholder="LastName" name="lastName" value={user.lastName} onChange={handleEdit} />
            <label className="label">Update Profile Photo</label>
            <input type="file" className="file-input " name="photoUrl"  onChange={(event)=>{
-            console.log(event.currentTarget.files)
+            
               let photoUrl=event.currentTarget.files[0];
               let view =URL.createObjectURL(photoUrl)
               setPreview(view)

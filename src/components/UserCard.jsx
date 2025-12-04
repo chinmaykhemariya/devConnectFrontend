@@ -2,12 +2,12 @@ import { useDispatch } from "react-redux";
 import { baseUrl } from "../utils/constants"
 import axios from "axios";
 import { addFeed } from "../utils/feedSlice";
-const UserCard = ({user,setEmpty}) => {
+const UserCard = ({user}) => {
   const dispatch=useDispatch()
   async function sendRequest(status,toUserId){try{
     await axios.post(baseUrl+`/request/send/${status}/${toUserId}`,{},{withCredentials:true});
      let newFeed=await axios.get(baseUrl+"/user/feed",{withCredentials:true});
-     if(newFeed.data.feed.length==0){setEmpty(true)}
+   //  if(newFeed.data.feed.length==0){setEmpty(true)}
         dispatch(addFeed(newFeed.data.feed))
   }
     catch(err){

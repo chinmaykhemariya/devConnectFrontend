@@ -10,7 +10,7 @@ import Loader from "./Loader"
 const Feed = () => {
     const dispatch=useDispatch();
   const feed=useSelector((state)=>state.feed.feed);
-  const [isEmpty,setEmpty]=useState(false)
+ // const [isEmpty,setEmpty]=useState(false)
   
     const getFeed=async()=>{
      
@@ -19,7 +19,7 @@ const Feed = () => {
       
         let newFeed=await axios.get(baseUrl+"/user/feed",{withCredentials:true});
         newFeed=newFeed.data.feed;
-        if(newFeed.length==0){setEmpty(true)}
+      //  if(newFeed.length==0){setEmpty(true)}
         dispatch(addFeed(newFeed))
       
       }
@@ -31,8 +31,10 @@ const Feed = () => {
     if(!feed){return(<Loader/>)}
     
   return (<>
-    {feed.length>0&&<UserCard user={feed[0]} setEmpty={setEmpty}></UserCard>}
-    {isEmpty&&<Empty>Done for the Day .Get Premium</Empty>}
+    {feed.length>0?<UserCard user={feed[0]} ></UserCard>:
+    <Empty>Done for the Day .Get Premium</Empty>
+    }
+    
   </>)
 }
 

@@ -7,7 +7,7 @@ import { addConnections } from "../utils/connectionsSlice";
 import Loader from"./Loader"
 import Empty from "./Empty";
 const Requests = () => {
-const [isEmpty,setEmpty]=useState(false)
+   //const [isEmpty,setEmpty]=useState(false)
   const requests=useSelector((state)=>state.requests.requests);
   const dispatch=useDispatch();
   const getRequests=async()=>{try{
@@ -17,7 +17,7 @@ const [isEmpty,setEmpty]=useState(false)
     result=result.data.data;
     
     
-     if(result.length==0){setEmpty(true)}
+    // if(result.length==0){setEmpty(true)}
     dispatch(addRequests(result))}
     catch(err){
       console.log(err.message)
@@ -28,7 +28,7 @@ const [isEmpty,setEmpty]=useState(false)
  
 
   return (<>{
-   requests.length>0&&
+   requests.length>0?
    <div className="flex justify-center" >
   <div className="carousel mt-5 space-x-4 ">
     {requests.map((request)=>{
@@ -50,7 +50,7 @@ const [isEmpty,setEmpty]=useState(false)
           await axios.patch(baseUrl+`/request/review/accepted/${request._id}`,{},{withCredentials:true})
            let result=await axios.get(baseUrl+"/user/requests/recieved",{withCredentials:true});
            result=result.data.data;
-            if(result.length==0){setEmpty(true)}
+         //   if(result.length==0){setEmpty(true)}
            dispatch(addRequests(result))
            let connections=await axios.get(baseUrl+"/user/connections",{withCredentials:true})
             connections=connections.data.data
@@ -63,7 +63,7 @@ const [isEmpty,setEmpty]=useState(false)
          await axios.patch(baseUrl+`/request/review/rejected/${request._id}`,{},{withCredentials:true})
           let result=await axios.get(baseUrl+"/user/requests/recieved",{withCredentials:true});
           result=result.data.data;
-           if(result.length==0){setEmpty(true)}
+          // if(result.length==0){setEmpty(true)}
            dispatch(addRequests(result))}
            catch(err){console.log(err.message)}
       }}
@@ -76,9 +76,9 @@ const [isEmpty,setEmpty]=useState(false)
 }
 </div>
 </div>
-
+:<Empty>No More Requests </Empty>
   }
-     {isEmpty&&<Empty>No More Requests </Empty>}
+     
     </>
   )
 }
