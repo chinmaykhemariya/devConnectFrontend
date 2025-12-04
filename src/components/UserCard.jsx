@@ -16,7 +16,7 @@ const UserCard = ({user}) => {
   }
   return (
     <div className='flex justify-center  mt-5'>
-  <div className="card  shadow w-96 bg-base-200 shadow-2xl">
+  <div className="card  shadow w-96 bg-base-300 shadow-2xl">
   <div className="hover-3d w-full">
   {/* content */}
   <figure className="max-w-96 w-96 rounded-2xl h-64 ">
