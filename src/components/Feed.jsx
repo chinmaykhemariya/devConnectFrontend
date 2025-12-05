@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { baseUrl } from "../utils/constants"
 import { useEffect, useState } from "react"
 import { addFeed } from "../utils/feedSlice"
-import UserCard from "./userCard"
+import UserCard from"./UserCard.jsx"
 import Loader from "./Loader"
 
 const Feed = () => {
