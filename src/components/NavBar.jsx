@@ -9,6 +9,7 @@ import { destroyConnections } from "../utils/connectionsSlice"
 import { destroyRequests } from "../utils/requestSlice"
 
 const NavBar = () => {
+  
   const dispatch=useDispatch()
   const user=useSelector((state=>state.user.user))
   const logOut=async(event)=>{

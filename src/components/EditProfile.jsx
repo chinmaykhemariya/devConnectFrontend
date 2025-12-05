@@ -6,7 +6,7 @@ import axios from "axios";
 const EditProfile = ({data}) => {
   const[preview,setPreview]=useState(data.photoUrl)
     let {firstName,lastName,age,gender,about,skills}=data;
-   // console.log("editProfile")
+    
     const dispatch=useDispatch()
     const [user,editUser]=useState({firstName,lastName,age,photoUrl:null,gender,about,skills});
     const[isEdited,setEdited]=useState(false)
